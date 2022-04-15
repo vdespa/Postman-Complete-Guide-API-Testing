@@ -9,7 +9,7 @@ The API is available at `https://simple-grocery-store-api.glitch.me`
 - [Status](#Status)
 - [Products](#Products)
   - [Get all products](#Get-all-products)
-  - [Get a single product](#Get-a-single-product)
+  - [Get a product](#Get-a-product)
 - [Cart](#Cart)
   - [Get a cart](#Get-a-cart)
   - [Get cart items](#Get-cart-items)
