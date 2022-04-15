@@ -17,7 +17,7 @@ The API is available at `https://simple-grocery-store-api.glitch.me`
   - [Add an item to cart](#Add-an-item-to-cart)
   - [Modify an item in the cart](#Modify-an-item-in-the-cart)
   - [Replace an item in the cart](#Replace-an-item-in-the-cart)
-  - [Delete an item in the cart](#-Delete-an-item-in-the-cart)
+  - [Delete an item in the cart](#Delete-an-item-in-the-cart)
 - [Orders](#Orders)
   - [Get all orders](#Get-all-orders)
   - [Get a single order](#Get-a-single-order)
