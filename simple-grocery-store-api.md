@@ -186,12 +186,22 @@ Allows the addition of items to an existing cart. Only one item can be added at 
 | `productId` | string  | body | Yes      | Specifies the product id                            |
 | `quantity`  | integer | body | No       | If no quantity is provided, the default value is 1. |
 
+Example request body:
+
+```
+{
+   "cartId": "bx0-ycNjqIm5IvufuuZ09",
+   "productId": 1234
+}
+```
+
 **Status codes**
 
 | Status code     | Description                                          |
 | --------------- | ---------------------------------------------------- |
 | 201 Created     | Indicates that the item has been added successfully. |
 | 400 Bad Request | Indicates that the parameters provided are invalid.  |
+
 
 ### Modify an item in the cart
 
@@ -409,7 +419,7 @@ Example request body:
 
 ```
 {
-   "clientName": "Postman",
+   "clientName": "Postman on Valentin's computer",
    "clientEmail": "valentin@example.com"
 }
 ```
