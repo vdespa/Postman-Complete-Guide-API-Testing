@@ -178,6 +178,8 @@ Allows the addition of items to an existing cart. Only one item can be added at 
 
 **`POST /carts/:cartId/items`**
 
+The request body needs to be in JSON format.
+
 **Parameters**
 
 | Name        | Type    | In   | Required | Description                                         |
@@ -202,12 +204,13 @@ Example request body:
 | 201 Created     | Indicates that the item has been added successfully. |
 | 400 Bad Request | Indicates that the parameters provided are invalid.  |
 
-
 ### Modify an item in the cart
 
 Allows modifying information about an item in the cart.
 
 **`PATCH /carts/:cartId/items/:itemId`**
+
+The request body needs to be in JSON format.
 
 **Parameters**
 
@@ -229,6 +232,8 @@ Allows modifying information about an item in the cart.
 Replace an item in the cart.
 
 **`PUT /carts/:cartId/items/:itemId`**
+
+The request body needs to be in JSON format.
 
 **Parameters**
 
@@ -276,9 +281,9 @@ Returns all orders created by the API client.
 
 **Parameters**
 
-| Name            | Type   | In     | Description                                   |
-| --------------- | ------ | ------ | --------------------------------------------- |
-| `Authorization` | string | header | Specifies the bearer token of the API client. |
+| Name            | Type   | In     | Required | Description                                   |
+| --------------- | ------ | ------ | -------- | --------------------------------------------- |
+| `Authorization` | string | header | Yes      | Specifies the bearer token of the API client. |
 
 **Status codes**
 
@@ -295,10 +300,11 @@ Returns a single order.
 
 **Parameters**
 
-| Name            | Type    | In     | Description                                   |
-| --------------- | ------- | ------ | --------------------------------------------- |
-| `Authorization` | string  | header | Specifies the bearer token of the API client. |
-| `invoice`       | boolean | query  | Optional - Shows the PDF invoice              |
+| Name            | Type    | In     | Required | Description                         |
+| --------------- | ------- | ------ | -------- | ----------------------------------- |
+| `Authorization` | string  | header | Yes      | The bearer token of the API client. |
+| `orderId`       | string  | path   | Yes      | The order id.                       |
+| `invoice`       | boolean | query  | No       | Show the PDF invoice.               |
 
 **Status codes**
 
@@ -312,14 +318,16 @@ Returns a single order.
 
 **`POST /orders`**
 
+The request body needs to be in JSON format.
+
 **Parameters**
 
-| Name            | Type   | In     | Description                                   |
-| --------------- | ------ | ------ | --------------------------------------------- |
-| `Authorization` | string | header | Specifies the bearer token of the API client. |
-| `cartId`        | string | body   | Specifies the cart id.                        |
-| `customerName`  | string | body   | Specifies the name of the customer.           |
-| `comment`       | string | body   | Optional. Specifies a comment.                |
+| Name            | Type   | In     | Required | Description                          |
+| --------------- | ------ | ------ | -------- | ------------------------------------ |
+| `Authorization` | string | header | Yes      | The bearer token of the API client.  |
+| `cartId`        | string | body   | Yes      | The cart id                          |
+| `customerName`  | string | body   | Yes      | The name of the customer.            |
+| `comment`       | string | body   | No       | A comment associated with the order. |
 
 Example request body:
 
@@ -342,13 +350,16 @@ Example request body:
 
 **`PATCH /orders/:orderId`**
 
+The request body needs to be in JSON format.
+
 **Parameters**
 
-| Name            | Type   | In     | Description                                   |
-| --------------- | ------ | ------ | --------------------------------------------- |
-| `Authorization` | string | header | Specifies the bearer token of the API client. |
-| `customerName`  | string | body   | Optional. Specifies the name of the customer. |
-| `comment`       | string | body   | Optional. Specifies a comment.                |
+| Name            | Type   | In     | Required | Description                          |
+| --------------- | ------ | ------ | -------- | ------------------------------------ |
+| `Authorization` | string | header | Yes      | The bearer token of the API client.  |
+| `orderId`       | string | path   | Yes      | The order id.                        |
+| `customerName`  | string | body   | No       | The name of the customer.            |
+| `comment`       | string | body   | No       | A comment associated with the order. |
 
 **Status codes**
 
@@ -373,10 +384,10 @@ Example request body:
 
 **Parameters**
 
-| Name            | Type   | In     | Description                                   |
-| --------------- | ------ | ------ | --------------------------------------------- |
-| `Authorization` | string | header | Specifies the bearer token of the API client. |
-| `orderId`       | string | path   | Specifies the order id.                       |
+| Name            | Type   | In     | Required | Description                         |
+| --------------- | ------ | ------ | -------- | ----------------------------------- |
+| `Authorization` | string | header | Yes      | The bearer token of the API client. |
+| `orderId`       | string | path   | Yes      | The order id.                       |
 
 **Status codes**
 
@@ -401,19 +412,22 @@ Example:
 
 **`POST /api-clients`**
 
+**Parameters**
+
 The request body needs to be in JSON format.
 
-| Name          | Type   | In   | Description                                    |
-| ------------- | ------ | ---- | ---------------------------------------------- |
-| `clientName`  | string | body | Specifies the name of the API client.          |
-| `clientEmail` | string | body | Specifies the email address of the API client. |
+| Name          | Type   | In   | Required | Description                          |
+| ------------- | ------ | ---- | -------- | ------------------------------------ |
+| `clientName`  | string | body | Yes      | The name of the API client.          |
+| `clientEmail` | string | body | Yes      | The email address of the API client. |
 
 **Status codes**
-| Status code | Description |
+
+| Status code     | Description                                                                       |
 |-----------------|-----------------------------------------------------------------------------------|
-| 201 Created | Indicates that the client has been registered successfully. |
-| 400 Bad Request | Indicates that the parameters provided are invalid. |
-| 409 Conflict | Indicates that an API client has already been registered with this email address. |
+| 201 Created     | Indicates that the client has been registered successfully.                       |
+| 400 Bad Request | Indicates that the parameters provided are invalid.                               |
+| 409 Conflict    | Indicates that an API client has already been registered with this email address. |
 
 Example request body:
 
