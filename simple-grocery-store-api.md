@@ -332,7 +332,7 @@ Example request body:
 
 ```
 {
-    "cartId": "5qNhmuZFe4yhGNyrbLWa4",
+    "cartId": "ZFe4yhG5qNhmuNyrbLWa4",
     "customerName": "John Doe"
 }
 ```
