@@ -192,7 +192,6 @@ Example request body:
 
 ```
 {
-   "cartId": "ycbx0-NjqIm5IvufuuZ09",
    "productId": 1234
 }
 ```
