@@ -216,6 +216,7 @@ The request body needs to be in JSON format.
 | Name       | Type    | In   | Required | Description            |
 | ---------- | ------- | ---- | -------- | ---------------------- |
 | `cartId`   | string  | path | Yes      | Specifies the cart id. |
+| `itemId`   | string  | path | Yes      | Specifies the item id. |
 | `quantity` | integer | body | Yes      | Quantity               |
 
 **Status codes**
@@ -239,6 +240,7 @@ The request body needs to be in JSON format.
 | Name        | Type    | In   | Required | Description               |
 | ----------- | ------- | ---- | -------- | ------------------------- |
 | `cartId`    | string  | path | Yes      | Specifies the cart id.    |
+| `itemId`    | string  | path | Yes      | Specifies the item id.    |
 | `productId` | string  | path | Yes      | Specifies the product id. |
 | `quantity`  | integer | body | No       | Quantity                  |
 
