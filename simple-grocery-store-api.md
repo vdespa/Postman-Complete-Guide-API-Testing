@@ -417,10 +417,13 @@ Example:
 
 The request body needs to be in JSON format.
 
-| Name          | Type   | In   | Required | Description                          |
-| ------------- | ------ | ---- | -------- | ------------------------------------ |
-| `clientName`  | string | body | Yes      | The name of the API client.          |
-| `clientEmail` | string | body | Yes      | The email address of the API client. |
+| Name          | Type   | In   | Required | Description                            |
+| ------------- | ------ | ---- | -------- | -------------------------------------- |
+| `clientName`  | string | body | Yes      | The name of the API client.            |
+| `clientEmail` | string | body | Yes      | The email address of the API client. * |
+
+
+* The email address DOES NOT need to be real. The email will not be stored on the server.
 
 **Status codes**
 
