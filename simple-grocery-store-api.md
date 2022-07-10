@@ -241,7 +241,7 @@ The request body needs to be in JSON format.
 | ----------- | ------- | ---- | -------- | ------------------------- |
 | `cartId`    | string  | path | Yes      | Specifies the cart id.    |
 | `itemId`    | string  | path | Yes      | Specifies the item id.    |
-| `productId` | string  | path | Yes      | Specifies the product id. |
+| `productId` | integer | body | Yes      | Specifies the product id. |
 | `quantity`  | integer | body | No       | Quantity                  |
 
 **Status codes**
@@ -260,10 +260,10 @@ Deletes an item in the cart.
 
 **Parameters**
 
-| Name        | Type   | In   | Required | Description               |
-| ----------- | ------ | ---- | -------- | ------------------------- |
-| `cartId`    | string | path | Yes      | Specifies the cart id.    |
-| `productId` | string | path | Yes      | Specifies the product id. |
+| Name     | Type   | In   | Required | Description            |
+| -------- | ------ | ---- | -------- | ---------------------- |
+| `cartId` | string | path | Yes      | Specifies the cart id. |
+| `itemId` | string | path | Yes      | Specifies the item id. |
 
 **Status codes**
 
