@@ -290,7 +290,7 @@ Returns all orders created by the API client.
 
 | Status code      | Description                                                                                            |
 | ---------------- | ------------------------------------------------------------------------------------------------------ |
-| 200 Created      | Indicates a successful response.                                                                       |
+| 200 OK           | Indicates a successful response.                                                                       |
 | 401 Unauthorized | Indicates that the request has not been authenticated. Check the response body for additional details. |
 
 ### Get a single order
@@ -311,7 +311,7 @@ Returns a single order.
 
 | Status code      | Description                                                                                            |
 | ---------------- | ------------------------------------------------------------------------------------------------------ |
-| 200 Created      | Indicates a successful response.                                                                       |
+| 200 OK           | Indicates a successful response.                                                                       |
 | 401 Unauthorized | Indicates that the request has not been authenticated. Check the response body for additional details. |
 | 404 Not found    | Indicates that there is no order with the specified id associated with the API client.                 |
 
