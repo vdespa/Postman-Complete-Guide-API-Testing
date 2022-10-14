@@ -320,6 +320,7 @@ Returns a single order.
 **`POST /orders`**
 
 The request body needs to be in JSON format.
+Once the order has been successfully submitted, the cart is deleted.
 
 **Parameters**
 
