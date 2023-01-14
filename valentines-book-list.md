@@ -37,17 +37,16 @@ Returns a list of books. Requires authentication.
 
 **Parameters**
 
-| Name        | Type    | In    | Required | Description                                                                                                                                          |
-| ----------- | ------- | ----- | -------- | ----------------------------------------------------------------------------------------------------------- |
-|
-| `list`      | string  | query | Yes      | Specifies the list you want to retrieve. Must be one of: favourite-books, non-fiction, wishlist, fiction.   |
-| `page`      | integer | query | No       | Specifies the page you wish to retrive from the entire result set.                                          |
+| Name        | Type    | In    | Required | Description                                                                                                | 
+| ----------- | ------- | ----- | -------- | -----------------------------------------------------------------------------------------------------------| 
+| `list`      | string  | query | Yes      | Specifies the list you want to retrieve. Must be one of: favourite-books, non-fiction, wishlist, fiction.  | 
+| `page`      | integer | query | No       | Specifies the page you wish to retrive from the entire result set.                                         | 
 
 **Status codes**
 
 | Status code | Description |
 |-----------------|-----------------------------------------------------|
-| 200 OK          | Indicates a successful response. |
+| 200 OK          | Indicates a successful response.                    |
 | 400 Bad Request | Indicates that the parameters provided are invalid. |
 
 Example response:
