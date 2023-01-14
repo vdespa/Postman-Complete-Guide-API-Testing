@@ -1,16 +1,14 @@
-# Simple Grocery Store API
+# Valentine's Book List API
 
-This API allows you to place a grocery order which will be ready for pick-up in the store.
+This API allows you to view the books that Valentine has read or plan to read.
 
-The API is available at `https://simple-grocery-store-api.glitch.me`
-
-Alternative URL: `http://simple-grocery-store-api.online/` (HTTP only!)
+The API is available at `https://valentines-book-list.glitch.me`
 
 ## Endpoints
 
 - [Status](#Status)
-- [Books](#Products)
-  - [Get a book list](#Get-all-products)
+- [Books](#Books)
+  - [Get a book list](#Get-a-book-list)
 
 
 ## Status
