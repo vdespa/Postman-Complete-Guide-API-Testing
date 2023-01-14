@@ -33,13 +33,13 @@ No response or any other response indicates that the API is not functioning corr
 
 **`GET /books/lists`**
 
-Returns a list of books 
+Returns a list of books. Requires authentication. 
 
 **Parameters**
 
 | Name        | Type    | In    | Required | Description                                                                                                                                          |
 | ----------- | ------- | ----- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| `api-key`   | string  | query | Yes      | Specifies API key.                                                                                          |
+|
 | `list`      | string  | query | Yes      | Specifies the list you want to retrieve. Must be one of: favourite-books, non-fiction, wishlist, fiction.   |
 | `page`      | integer | query | No       | Specifies the page you wish to retrive from the entire result set.                                          |
 
@@ -79,8 +79,4 @@ Example response:
 
 Some endpoints require authentication. 
 
-The endpoints that require authentication expect a bearer token sent in the `Authorization` header.
-
-Example:
-
-`Authorization: Bearer YOUR TOKEN`
+The endpoints that require authentication expect the API key to be provided as a query parameter named `api-key`.
