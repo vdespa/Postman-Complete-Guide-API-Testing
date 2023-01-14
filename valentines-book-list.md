@@ -35,6 +35,8 @@ No response or any other response indicates that the API is not functioning corr
 
 Returns a list of books. Requires authentication. 
 
+This endpoint uses pagination to handle the returned results. Paginating the results ensures responses are easier to handle. Each response will indicate the total number of results, the current page, and the total number of pages.
+
 **Parameters**
 
 | Name        | Type    | In    | Required | Description                                                                                                | 
