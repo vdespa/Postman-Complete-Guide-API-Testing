@@ -1,6 +1,6 @@
 # Valentine's Book List API
 
-This API allows you to view the books that Valentine has read or plan to read.
+This API allows you to view the books that Valentine has read or plans to read.
 
 The API is available at `https://valentines-book-list.glitch.me`
 
