@@ -67,7 +67,7 @@ Returns a list of products from the inventory.
 | 200 OK | Indicates a successful response. |
 | 400 Bad Request | Indicates that the parameters provided are invalid. |
 
-Exampler response:
+Example response:
 
 ```
 [
