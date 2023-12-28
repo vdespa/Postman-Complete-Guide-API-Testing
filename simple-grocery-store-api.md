@@ -187,7 +187,7 @@ The request body needs to be in JSON format.
 | Name        | Type    | In   | Required | Description                                         |
 | ----------- | ------- | ---- | -------- | --------------------------------------------------- |
 | `cartId`    | string  | path | Yes      | Specifies the cart id.                              |
-| `productId` | string  | body | Yes      | Specifies the product id                            |
+| `productId` | integer | body | Yes      | Specifies the product id                            |
 | `quantity`  | integer | body | No       | If no quantity is provided, the default value is 1. |
 
 Example request body:
