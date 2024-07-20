@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Valentine's Book List API
+  description: |
+    This API allows you to view the books that Valentine has read or plans to read.
+
+    The API is available at `https://valentines-book-list.glitch.me`
+  version: "acc411151ad8c42b47a9a37b91f1415aecd2a49e"
+servers:
+  - url: https://valentines-book-list.glitch.me
+paths:
+  /status:
+    get:
+      tags: ["status"]
+      summary: Returns the status of the API. Example response
+      description: |
+        Status `UP` indicates that the API is running as expected.
+
+        No response or any other response indicates that the API is not functioning correctly.
+      responses:
+        "200":
+          description: Response when service is available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: "string" }
+                example: {
+                  "status": "UP"
+                }
+  /books/lists:
+    get:
+      tags: ["books"]
+      summary: Get a book list
+      description: |
+        Returns a list of books. Requires authentication. 
+
+        This endpoint uses pagination to handle the returned results.\
+        Paginating the results ensures responses are easier to handle.\
+        Each response will indicate the total number of results, the \
+        current page, and the total number of pages.
+      parameters:
+        - name: api-key
+          description: API Key that is required for this endpoint
+          in: query
+          schema: { type: "string" }
+          required: true
+          example: "8fhg93xkjd38fhg834jdfgjd"
+        - name: list
+          description: "Specifies the list you want to retrieve. Must be one of: favourite-books, non-fiction, wishlist, fiction."
+          in: query
+          schema: { type: "string" }
+          required: true
+          example: "non-fiction"
+        - name: page
+          description: Specifies the page you wish to retrive from the entire result set.
+          in: query
+          schema: { type: "integer" }
+          required: false
+          example: 1
+      responses:
+        "200":
+          description: Indicates a successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: "string" }
+                  num_results: { type: "integer" }
+                  page: { type: "integer" }
+                  total_pages: { type: "integer" }
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title: { type: "string" }
+                        category: { type: "array", items: { type: "string" } }
+                        type: { type: "string" }
+                        author: { type: "string" }
+                        release_year: { type: "integer" }
+                        rating: { oneOf: [{ "type": "string" } , { "type": "number"}] }
+              example: {
+                "status": "OK",
+                "num_results": 17,
+                "page": 1,
+                "total_pages": 4,
+                "results": [
+                    {
+                        "title": "Crush It!: Why NOW Is the Time to Cash In on Your Passion",
+                        "category": [
+                            "non-fiction"
+                        ],
+                        "type": "audio",
+                        "author": "Gary Vaynerchuk",
+                        "release_year": 2010,
+                        "rating": "7"
+                    }
+                ]
+              }
+        "400":
+          description: Indicates that the parameters provided are invalid.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: { type: "string" }
+        "401":
+          description: Indicates user is unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      error-string: { type: "string" }
+                      detail:
+                        type: object
+                        properties:
+                          errorcode: { type: "string" }
+        "404":
+          description: Indicates books not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: { type: "string" }
+tags:
+  - name: status
+  - name: books
