@@ -1,0 +1,503 @@
+openapi: 3.0.3
+info:
+  title: Grocery Store API (Open API Spec)
+  description: |
+    This API allows you to place a grocery order which will be ready for pick-up in the store. The API is available at https://simple-grocery-store-api.glitch.me
+    A fuller description is located at (Simple Grocery Store API)[https://github.com/vdespa/Postman-Complete-Guide-API-Testing/blob/main/simple-grocery-store-api.md]
+  version: 1.1.0
+servers:
+  - url: https://simple-grocery-store-api.glitch.me
+paths:
+  /status:
+    get:
+      tags: ["status"]
+      summary: Returns the status of the API
+      description: |
+        Status UP indicates that the API is running as expected.
+        No response or any other response indicates that the API is not functioning correctly.
+      responses:
+        '200':
+          description: Status is UP
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required: ['status']
+              example: {
+                "status": "UP"
+              }
+  /products:
+    get:
+      tags: ["product"]
+      summary: Get all products
+      description: Returns a list of products from the inventory.
+      parameters:
+      - name: category
+        description: "Specifies the category of products you want to be returned. It can be one of: meat-seafood, fresh-produce, candy, bread-bakery, dairy, eggs, coffee."
+        in: query
+        schema: { type: "string" }
+        required: false
+        example: "dairy"
+      - name: results
+        description: "Specifies the number of results you want. Must be number between 1 and 20. By default, only 20 products will be displayed."
+        in: query
+        schema: 
+          type: "integer"
+          minimum: 1
+          maximum: 20
+        required: false
+        example: 20
+      - name: available
+        description: "Specifies the availability of the products. By default, all products will be displayed."
+        in: query
+        schema: { type: boolean }
+        required: false
+        example: false
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: { type: "number" }
+                    category: { type: "string" }
+                    name: { type: "string" }
+                    inStock: { type: "boolean" }
+              example: [
+                {
+                    "id": 4643,
+                    "category": "coffee",
+                    "name": "Starbucks Coffee Variety Pack, 100% Arabica",
+                    "inStock": true
+                },
+                {
+                    "id": 4646,
+                    "category": "coffee",
+                    "name": "Ethical Bean Medium Dark Roast, Espresso",
+                    "inStock": true
+                },
+              ]
+  /products/{productId}:
+    get:
+      tags: ["product"]
+      summary: Get a product
+      description: Returns a single product from the inventory.
+      parameters:
+        - name: productId
+          description: Specifies the product's id you wish to retrieve.
+          in: path
+          schema: { type: "integer" }
+          required: true
+          example: 4643
+        - name: product-label
+          description: Returns the product label in PDF format.
+          in: query
+          schema: { type: boolean }
+          required: false
+          example: true
+      responses:
+        "200":
+          description: Indicates successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: { type: "integer" }
+                  category: { type: "string" }
+                  name: { type: "string" }
+                  manufacturer: { type: "string" }
+                  price: { type: "number" }
+                  "current-stock": { type: "number" }
+                  inStock: { type: "boolean" }
+              example: {
+                "id": 4643,
+                "category": "coffee",
+                "name": "Starbucks Coffee Variety Pack, 100% Arabica",
+                "manufacturer": "Starbucks",
+                "price": 40.91,
+                "current-stock": 14,
+                "inStock": true
+              }
+        "404": { "$ref": "#/components/responses/404Response" }
+  /carts:
+    post:
+      tags: ["cart"]
+      summary: Create a new cart
+      description: To create a new cart, submit an empty POST request to the /carts endpoint.
+      responses:
+        "201":
+          description: Indicates that the cart has been created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  created: { "type": "boolean" }
+                  cartId: { "type": "string" }
+              example: {
+                "created": true,
+                "cartId": "bx0-ycNjqIm5IvufuuZ09"
+              }
+  /carts/{cartId}:
+    parameters:
+      - { "$ref": "#/components/parameters/cartId"}
+    get:
+      tags: ["cart"]
+      description: Get a cart
+      summary: Returns a cart
+      responses:
+        "200":
+          description: Indicates successful response
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  created:
+                    type: string
+                    format: date-time
+                  items:
+                    type: array
+                    items: { "$ref": "#/components/schemas/cartItem" }
+        "404": { "$ref": "#/components/responses/404Response" }
+  /carts/{cartId}/items:
+    parameters:
+      - { "$ref": "#/components/parameters/cartId" }
+    get:
+      tags: ["cart"]
+      summary: Get cart items
+      description: Returns the items in a cart.
+      responses:
+        "200":
+          description: Indicates a successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { "$ref": "#/components/schemas/cartItem" }
+        "404": { "$ref": "#/components/responses/404Response" }
+    post:
+      tags: ["cart"]
+      summary: Add an item to cart
+      description: Allows the addition of items to an existing cart. Only one item can be added at a time.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  description: Specifies the product id.
+                  type: integer
+                quantity:
+                  description: If no quantity is provided, the default value is 1
+                  default: 1
+              required: ["productId"]
+            example: {
+              "productId": 4643
+            }
+      responses:
+        "201":
+          description: Indicates that the item has been added successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  created: { "type": "boolean"}
+                  itemId: { "type": "string" }
+              example: {
+                "created": true,
+                "itemId": "307737708"
+              }
+        "400": { "$ref": "#/components/responses/400Response" }
+  /carts/{cartId}/items/{itemId}:
+    parameters:
+    - { "$ref": "#/components/parameters/cartId" }
+    - { "$ref": "#/components/parameters/itemId" }
+    patch:
+      tags: ["cart"]
+      summary: Allows modifying information about an item in the cart.
+      description: The request body needs to be in JSON format.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity: { "type": "integer" }
+              required: ["quantity"]
+            example: {
+              quantity: 1
+            }
+      responses:
+        "204":
+          description: Indicates that the item has been updated successfully.
+        "400": { "$ref": "#/components/responses/400Response" }
+        "404": { "$ref": "#/components/responses/404Response" }
+    put:
+      tags: ["cart"]
+      summary: Replace an item in the cart.
+      description: The request body needs to be in JSON format.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId: { "type": "integer" }
+                quantity: { "type": "integer" }
+              required: ["productId"]
+            example: {
+              "productId": 4643,
+              "quantity": 1
+            }
+      responses:
+        "204":
+          description: Indicates that the item has been updated successfully.
+        "400": { "$ref": "#/components/responses/400Response" }
+        "404": { "$ref": "#/components/responses/404Response" }
+    delete:
+      tags: ["cart"]
+      summary: Deletes an item in the cart.
+      responses:
+        "204":
+          description: Indicates that the item has been deleted successfully.
+        "404": { "$ref": "#/components/responses/404Response" }
+  /orders:
+    parameters:
+    - { "$ref": "#/components/parameters/authorization" }
+    get:
+      tags: ["order"]
+      summary: Get all /orders
+      description: Returns all orders created by the API client
+      responses:
+        "200":
+          description: Indicates a successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { "$ref": "#/components/schemas/order" }
+        "401": { "$ref": "#/components/responses/401Response" }
+    post:
+      tags: ["order"]
+      summary: Create a new order
+      description: The request body needs to be in JSON format. Once the order has been successfully submitted, the cart is deleted.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cartId: { type: "string" }
+                customerName: { type: "string" }
+                comment: { type: "string" }
+              required: ["cartId","customerName"]
+            example: {
+              "cartId": "ZFe4yhG5qNhmuNyrbLWa4",
+              "customerName": "John Doe"
+            }
+      responses:
+        "201":
+          description: Indicates that the order has been created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  created: { "type": "boolean" }
+                  orderId: { "type": "string" }
+              example: {
+                "created": true,
+                "orderId": "vJln6UPMuNEtn4x3UmfWC"
+              }
+        "400": { "$ref": "#/components/responses/400Response" }
+        "401": { "$ref": "#/components/responses/401Response" }
+  /orders/{orderId}:
+    parameters:
+      - { "$ref": "#/components/parameters/authorization" }
+      - { "$ref": "#/components/parameters/orderId"}
+    patch:
+      tags: ["order"]
+      summary: Updates the comment or customer name associated with an order
+      description: The request body needs to be in JSON format.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customerName: { type: "string" }
+                comment: { type: "string" }
+            example: {
+              "customerName": "John Doe",
+              "comment": "An example comment"
+            }
+      responses:
+        "204":
+          description: Indicates that the order has been updated successfully.
+        "400": { "$ref": "#/components/responses/400Response" }
+        "401": { "$ref": "#/components/responses/401Response" }
+        "404": { "$ref": "#/components/responses/404Response" }
+    delete:
+      tags: ["order"]
+      summary: Delete an order
+      responses:
+        "204":
+          description: Indicates that the order has been successfully deleted.
+        "400": { "$ref": "#/components/responses/400Response" }
+        "401": { "$ref": "#/components/responses/401Response" }
+        "404": { "$ref": "#/components/responses/404Response" }
+  /api-clients:
+    description: |
+      Some endpoints may require authentication. To submit or view an order, you need to register your API client and obtain an access token.
+
+      The endpoints that require authentication expect a bearer token sent in the Authorization header.
+
+      Example:
+
+      Authorization: Bearer YOUR TOKEN
+    post:
+      tags: ["authentication"]
+      summary: Register a new API client
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientName: { "type": "string", "description": "The name of the API client." }
+                clientEmail: { "type": "string", "description": "The email address of the API client. The email address DOES NOT need to be real. The email will not be stored on the server." }
+              required: ["clientName","clientEmail"]
+            example: {
+              clientName: "John Doe",
+              clientEmail: "150b3447-7d12-426e-ba77-a1203d28f8a5@example.com"
+            }
+      responses:
+        "201":
+          description: Indicates that the client has been registered successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken: { "type": "string" }
+              example: {
+                "accessToken": "8363b83fa762c34055b7d8135e2c521fc9fa5b743b140e05ca178b62a21ba9f2"
+              }
+        "400": { "$ref": "#/components/responses/400Response" }
+        "409":
+          description: Indicates that an API client has already been registered with this email address.
+          content:
+            application/json:
+              schema: { "$ref": "#/components/schemas/error" }
+security:
+  - {}
+  - bearer: []
+components:
+  schemas:
+    order:
+      type: object
+      properties:
+        id: { "type": "string" }
+        items: { "$ref": "#/components/schemas/cartItem" }
+        customerName: { "type": "string" }
+        created: { "type": "string", format: "date-time" }
+        comment: { "type": "string" }
+      example: {
+          "id": "vJln6UPMuNEtn4x3UmfWC",
+          "items": [
+              {
+                  "id": 97962858,
+                  "productId": 4643,
+                  "quantity": 1
+              }
+          ],
+          "customerName": "Postman on Valentin's computer",
+          "created": "2024-07-19T12:13:24.934Z",
+          "comment": ""
+      }
+    error:
+      type: object
+      properties:
+        error: { type: "string" }
+      required: ["error"]
+      example: {
+        "error": "The error message associated with the request"
+      }
+    cartItem:
+      type: object
+      properties:
+        id: { type: "string" }
+        productId: { type: "integer" }
+        quantity: { type: "integer" }
+      required: ["id","productId","quantity"]
+      example: {
+        "id": 453651364,
+        "productId": 4646,
+        "quantity": 1
+      }
+  parameters:
+    cartId:
+      name: cartId
+      description: Specifies the id of the cart
+      in: path
+      schema: { type: "string" }
+      required: true
+      example: "xrc_kqazYgEQyTvTLX1hk"
+    itemId:
+      name: itemId
+      description: Specifies the id of the item
+      in: path
+      schema: { type: "string" }
+      required: true
+      example: "383044229"
+    orderId:
+      name: orderId
+      description: Specifies the id of the order
+      in: path
+      schema: { type: "string" }
+      required: true
+    authorization:
+      name: Authorization
+      description: The bearer token of the API client.
+      in: header
+      schema: { type: "string" }
+      required: true
+      example: "150b3447-7d12-426e-ba77-a1203d28f8a5@example.com"
+  responses: 
+    401Response:
+      description: Indicates that the request has not been authenticated. Check the response body for additional details.
+      content:
+        application/json:
+          schema: { "$ref": "#/components/schemas/error" }
+    404Response:
+      description: Indicates that there is no entity with the specified id associated with the API client.
+      content:
+        application/json:
+          schema: { "$ref": "#/components/schemas/error" }
+    400Response:
+      description: Indicates that the parameters provided are invalid.
+      content:
+        application/json:
+          schema: { "$ref": "#/components/schemas/error" }
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: Use /api-clients endpoint to get token
+tags:
+  - name: status
+  - name: product
+  - name: cart
+  - name: order
+  - name: authentication
