@@ -6,7 +6,7 @@ The API is available at `https://simple-grocery-store-api.glitch.me`
 
 Alternative URL if you are having connection issues:
 
-`[http://simple-grocery-store-api.online/](https://simple-grocery-api.store/)`
+[`[http://simple-grocery-store-api.online/](https://simple-grocery-api.store/)`](https://simple-grocery-api.store/)
 
 ## Endpoints
 
