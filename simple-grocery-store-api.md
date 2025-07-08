@@ -2,11 +2,7 @@
 
 This API allows you to place a grocery order which will be ready for pick-up in the store.
 
-The API is available at `https://simple-grocery-store-api.glitch.me`
-
-Alternative URL if you are having connection issues:
-
-`https://simple-grocery-api.store/`
+The API is available at `https://simple-grocery-store-api.click`
 
 ## Endpoints
 
