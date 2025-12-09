@@ -2,11 +2,11 @@ openapi: 3.0.3
 info:
   title: Grocery Store API (Open API Spec)
   description: |
-    This API allows you to place a grocery order which will be ready for pick-up in the store. The API is available at https://simple-grocery-store-api.glitch.me
+    This API allows you to place a grocery order which will be ready for pick-up in the store. The API is available at https://simple-grocery-store-api.click
     A fuller description is located at (Simple Grocery Store API)[https://github.com/vdespa/Postman-Complete-Guide-API-Testing/blob/main/simple-grocery-store-api.md]
   version: 1.1.0
 servers:
-  - url: https://simple-grocery-store-api.glitch.me
+  - url: https://simple-grocery-store-api.click
 paths:
   /status:
     get:
